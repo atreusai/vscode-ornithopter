@@ -1,0 +1,15 @@
+.waiting {
+  text-align: center;
+}
+
+.my-json {
+  white-space: pre;
+  font-family: --vscode-editor-font-family;
+}
+
+/*
+.vscode-dark .highlight{
+  color: purple;
+  text-align: center;
+}
+*/

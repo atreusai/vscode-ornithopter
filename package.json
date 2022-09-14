@@ -1,0 +1,182 @@
+{
+	"name": "ornithopter",
+	"publisher": "atreus",
+	"displayName": "Ornithopter: Solidity Tooling",
+	"description": "Tooling for smart contract security",
+	"version": "0.0.1",
+	"engines": {
+		"vscode": "^1.67.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"onCommand:ornithopter.foundryInit",
+		"workspaceContains:**/*.sol"
+	],
+	"main": "./dist/extension.js",
+	"contributes": {
+		"taskDefinitions": [
+			{
+				"type": "foundry"
+			}
+		],
+		"commands": [
+			{
+				"command": "ornithopter.analyze",
+				"title": "Analyze solidity"
+			},
+			{
+				"command": "ornithopter.foundryBuild",
+				"title": "Foundry: Build"
+			},
+			{
+				"command": "ornithopter.foundryInit",
+				"title": "Foundry: Init"
+			},
+			{
+				"command": "ornithopter.logout",
+				"title": "Atreus: Logout"
+			},
+			{
+				"command": "ornithopter.login",
+				"title": "Atreus: Login"
+			},
+			{
+				"command": "ornithopter.register",
+				"title": "Atreus: Register Repo (don't include in commit)"
+			},
+			{
+				"command": "ornithopter.set.rinkebyRpcUrl",
+				"title": "Add Secret Rinkeby RPC URL"
+			},
+			{
+				"command": "ornithopter.get.rinkebyRpcUrl",
+				"title": "Get Secret Rinkeby RPC URL"
+			},
+			{
+				"command": "ornithopter.set.privateKey",
+				"title": "Add Secret Private Key"
+			},
+			{
+				"command": "ornithopter.get.privateKey",
+				"title": "Get Secret Private Key"
+			},
+			{
+				"command": "ornithopter.set.etherscanKey",
+				"title": "Add Secret Etherscan Key"
+			},
+			{
+				"command": "ornithopter.get.etherscanKey",
+				"title": "Get Secret Etherscan Key"
+			},
+			{
+				"command": "ornithopter.forge.script.local",
+				"title": "Foundry: Run Script Locally"
+			},
+			{
+				"command": "ornithopter.forge.script.rinkeby",
+				"title": "Foundry: Run Script Rinkeby (No Verfication)"
+			},
+			{
+				"command": "ornithopter.forge.script.rinkeby.with.verification",
+				"title": "Foundry: Run Script Rinkeby with Verification (Experimental) "
+			},
+			{
+				"command": "ornithopter.install.foundry.locally",
+				"title": "Foundry: Install Foundry Executables in Local Folder"
+			}
+		],
+		"configuration": {
+			"type": "object",
+			"title": "Ornithopter configuration",
+			"properties": {
+				"ornithopter.foundryExecutableLocation": {
+					"enum": [
+						"Use Foundry Installed in Local Project Folder",
+						"Use Foundry Installed on Machine"
+					],
+					"default": "Use Foundry Installed in Local Project Folder",
+					"description": "This extension installs Foundry executables in your local project folder.\nChoose whether to use this local install or the install located on your machine"
+				},
+				"ornithopter.APIUrl": {
+					"type": "string",
+					"default": "https://atreus.ai/api/dev"
+				},
+				"ornithopter.useAtreusAnalysisServer": {
+					"type": "boolean",
+					"default": "false",
+					"description": "Enable Atreus analysis functionality"
+				}
+			}
+		},
+		"menus": {
+			"commandPalette": [
+				{
+					"command": "ornithopter.analyze",
+					"when": "config.ornithopter.useAtreusAnalysisServer == true"
+				},
+				{
+					"command": "ornithopter.login",
+					"when": "config.ornithopter.useAtreusAnalysisServer == true"
+				},
+				{
+					"command": "ornithopter.logout",
+					"when": "config.ornithopter.useAtreusAnalysisServer == true"
+				},
+				{
+					"command": "ornithopter.register",
+					"when": "config.ornithopter.useAtreusAnalysisServer == true"
+				}
+			]
+		}
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run package",
+		"compile": "webpack",
+		"watch": "webpack --watch",
+		"package": "webpack --mode production --devtool hidden-source-map",
+		"compile-tests": "tsc -p . --outDir out",
+		"watch-tests": "tsc -p . -w --outDir out",
+		"pretest": "npm run compile-tests && npm run compile && npm run lint",
+		"lint": "eslint src --ext ts",
+		"test": "node ./out/test/runTest.js"
+	},
+	"devDependencies": {
+		"@types/auth0": "^2.35.3",
+		"@types/glob": "^7.2.0",
+		"@types/jsonwebtoken": "^8.5.8",
+		"@types/mocha": "^9.1.1",
+		"@types/node": "14.x",
+		"@types/uuid": "^8.3.4",
+		"@types/vscode": "^1.67.0",
+		"@types/web3": "^1.2.2",
+		"@types/websocket": "^1.0.5",
+		"@typescript-eslint/eslint-plugin": "^5.21.0",
+		"@typescript-eslint/parser": "^5.21.0",
+		"@vscode/test-electron": "^2.1.3",
+		"eslint": "^8.14.0",
+		"glob": "^8.0.1",
+		"mocha": "^9.2.2",
+		"solc": "^0.8.14-fixed",
+		"solidity-ast": "^0.4.32",
+		"ts-loader": "^9.2.8",
+		"typescript": "^4.6.4",
+		"webpack": "^5.70.0",
+		"webpack-cli": "^4.9.2"
+	},
+	"dependencies": {
+		"auth0": "^2.42.0",
+		"axios": "^0.27.2",
+		"jwt-decode": "^3.1.2",
+		"lz4-wasm-nodejs": "^0.9.2",
+		"node-auth0": "^1.0.0",
+		"node-fetch": "^3.2.5",
+		"tempy": "^3.0.0",
+		"uuid": "^8.3.2",
+		"websocket": "^1.0.34"
+	},
+	"extensionDependencies": [
+		"JuanBlanco.solidity"
+	]
+}
